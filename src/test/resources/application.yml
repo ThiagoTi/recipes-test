@@ -1,0 +1,55 @@
+server:
+  port: 8082
+  compression:
+    enabled: true
+  error:
+    include-stacktrace: never
+    include-message: always
+
+spring:
+  output:
+    ansi:
+      enabled: always
+
+  jackson:
+    default-property-inclusion: non_null
+    serialization:
+      indent-output: true
+      write-date-keys-as-timestamps: true
+      write-dates-as-timestamps: false
+      write-date-timestamps-as-nanoseconds: false
+    deserialization:
+      read-date-timestamps-as-nanoseconds: false
+
+  data:
+    jpa:
+      repositories:
+        bootstrap-mode: default
+
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:postgresql://localhost:5432/recipes-test
+    username: postgres
+    password: postgres
+
+  jpa:
+    show-sql: false
+    open-in-view: false
+    hibernate:
+      ddl-auto: none
+
+logging:
+  level:
+    com.recipes: ERROR
+    org:
+      springframework: ERROR
+      springframework.amqp: ERROR
+      springframework.transaction.interceptor: ERROR
+      security.web: ERROR
+      hibernate: ERROR
+      hibernate.stat: ERROR
+      hibernate.SQL: ERROR
+      hibernate.SQL_SLOW: ERROR
+      hibernate.type.orm.jdbc:
+        bind: ERROR
+        extract: ERROR

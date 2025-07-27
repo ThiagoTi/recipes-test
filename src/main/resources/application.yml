@@ -1,0 +1,96 @@
+server:
+  port: 8081
+  compression:
+    enabled: true
+  error:
+    include-stacktrace: never
+    include-message: always
+
+spring:
+  output:
+    ansi:
+      enabled: always
+
+  jackson:
+    default-property-inclusion: non_null
+    serialization:
+      indent-output: true
+      write-date-keys-as-timestamps: true
+      write-dates-as-timestamps: false
+      write-date-timestamps-as-nanoseconds: false
+    deserialization:
+      read-date-timestamps-as-nanoseconds: false
+
+  data:
+    jpa:
+      repositories:
+        bootstrap-mode: default
+
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:postgresql://localhost:5432/recipes-test
+    username: postgres
+    password: postgres
+    hikari:
+      auto-commit: false
+      maximum-pool-size: 1000
+      connection-timeout: 30000
+      minimum-idle: 10
+      idle-timeout: 600000
+      max-lifetime: 1800000
+      data-source-properties:
+        useServerPrepStmts: true
+        useLocalSessionState: true
+        rewriteBatchedStatements: true
+        cacheResultSetMetadata: true
+        cacheServerConfiguration: true
+        elideSetAutoCommits: true
+        maintainTimeStats: false
+
+  jpa:
+    show-sql: false
+    open-in-view: false
+    hibernate:
+      ddl-auto: none
+      physical_naming_strategy: org.springframework.boot.orm.jpa.hibernate.CamelCaseToUnderscoresNamingStrategy
+      implicit_naming_strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+    properties:
+      hibernate:
+        generate_statistics: false
+        format_sql: false
+        show_sql: false
+        query:
+          plan_cache_max_size: 1024
+          plan_parameter_metadata_max_size: 64
+        connection:
+          provider_disables_autocommit: true
+          use_second_level_cache: true
+          use_query_cache: false
+        jdbc:
+          time_zone: UTC
+          batch_size: 25
+        order_inserts: true
+        order_updates: true
+        order_by:
+          default_null_ordering: last
+        session:
+          events:
+            log:
+              LOG_QUERIES_SLOWER_THAN_MS: 20
+
+logging:
+  level:
+    com.recipes: DEBUG
+    org:
+      springframework: ERROR
+      springframework.amqp: WARN
+      springframework.transaction.interceptor: DEBUG
+      security.web: DEBUG
+      hibernate: WARN
+      hibernate.stat: DEBUG
+      hibernate.SQL: DEBUG
+      hibernate.SQL_SLOW: INFO
+      hibernate.type.orm.jdbc:
+        bind: TRACE
+        extract: TRACE
+    tracer: DEBUG
